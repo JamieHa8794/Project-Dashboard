@@ -1,6 +1,10 @@
-import Column from './Column';
+import { useState } from 'react';
 
-import { tasks } from '../data/tasks';
+import Column from './Column';
+import CreateTask from './CreateTask';
+
+import type { Task } from '../types/task';
+import { tasks as InitialTasks } from '../data/tasks';
 
 import '../styles/Board.css';
 
@@ -11,8 +15,20 @@ function Board() {
     { id: 3, title: 'Done', status: 'done' },
   ];
 
+  const [tasks, setTasks] = useState<Task[]>(InitialTasks);
+
+  function handleSubmitNewTask(title: string, description: string) {
+    const newTask: Task = {
+      id: crypto.randomUUID(),
+      title,
+      description,
+      status: 'todo',
+    };
+    setTasks([...tasks, newTask]);
+  }
   return (
     <div>
+      <CreateTask handleSubmitNewTask={handleSubmitNewTask} />
       <div className="board-container">
         <div className="column-container">
           {columns.map((column) => {

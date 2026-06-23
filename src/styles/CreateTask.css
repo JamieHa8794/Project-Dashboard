@@ -1,0 +1,17 @@
+.create-task-container {
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  width: 500px;
+}
+.modal-header {
+  display: flex;
+  justify-content: center;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px;
+}
