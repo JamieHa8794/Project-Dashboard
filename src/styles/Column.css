@@ -1,4 +1,11 @@
 .column-header {
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid;
+  min-width: 200px;
+}
+.empty-state-message {
+  display: flex;
+  justify-content: center;
 }

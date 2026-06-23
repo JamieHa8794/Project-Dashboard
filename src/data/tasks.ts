@@ -11,7 +11,7 @@ export const tasks: Task[] = [
     id: '2',
     title: 'Build TaskCard',
     description: 'Render task information',
-    status: 'in-progress',
+    status: 'done',
   },
   {
     id: '3',

@@ -10,6 +10,8 @@ type ColumnProps = {
 };
 
 function Column({ columnName, tasks }: ColumnProps) {
+  const hasNoTasks = tasks.length === 0;
+
   return (
     <div>
       <div>
@@ -17,9 +19,13 @@ function Column({ columnName, tasks }: ColumnProps) {
           <div>{columnName}</div>
         </div>
         <div>
-          {tasks.map((task) => {
-            return <TaskCard key={task.id} task={task} />;
-          })}
+          {hasNoTasks ? (
+            <div className="empty-state-message">No Tasks Yet</div>
+          ) : (
+            tasks.map((task) => {
+              return <TaskCard key={task.id} task={task} />;
+            })
+          )}
         </div>
       </div>
     </div>
