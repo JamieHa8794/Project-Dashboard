@@ -38,6 +38,11 @@ function Board() {
     setCurrentlyEditing(id);
   }
 
+  function handleDeleteTask(id: string | null) {
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTasks([...filteredTasks]);
+  }
+
   return (
     <div>
       <TaskForm
@@ -59,6 +64,7 @@ function Board() {
                 columnName={column.title}
                 tasks={columnTasks}
                 handleSetEditTask={handleSetEditTask}
+                handleDeleteTask={handleDeleteTask}
               />
             );
           })}

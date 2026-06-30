@@ -9,9 +9,15 @@ type ColumnProps = {
   tasks: Task[];
 
   handleSetEditTask: (id: string) => void;
+  handleDeleteTask: (id: string) => void;
 };
 
-function Column({ columnName, tasks, handleSetEditTask }: ColumnProps) {
+function Column({
+  columnName,
+  tasks,
+  handleSetEditTask,
+  handleDeleteTask,
+}: ColumnProps) {
   const hasNoTasks = tasks.length === 0;
 
   return (
@@ -30,6 +36,7 @@ function Column({ columnName, tasks, handleSetEditTask }: ColumnProps) {
                   key={task.id}
                   task={task}
                   handleSetEditTask={handleSetEditTask}
+                  handleDeleteTask={handleDeleteTask}
                 />
               );
             })
