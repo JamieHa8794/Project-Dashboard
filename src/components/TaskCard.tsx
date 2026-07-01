@@ -10,7 +10,7 @@ type TaskCardProps = {
 
 function TaskCard(props: TaskCardProps) {
   const {
-    task: { id, title, description },
+    task: { id, title, description, priority },
     handleSetEditTask,
     handleDeleteTask,
   } = props;
@@ -30,6 +30,7 @@ function TaskCard(props: TaskCardProps) {
         </div>
         <div className="card-body">
           <div>{description}</div>
+          <div>{priority}</div>
         </div>
         <div className="card-footer">
           <button

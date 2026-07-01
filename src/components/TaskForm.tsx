@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../styles/TaskForm.css';
 
-import type { Task, TaskStatus } from '../types/task';
+import type { Task, TaskStatus, TaskPriority } from '../types/task';
 
 type CreateTaskProps = {
   tasks: Task[];
@@ -22,6 +22,9 @@ function TaskForm(props: CreateTaskProps) {
   const [status, setStatus] = useState<TaskStatus>(
     editTask ? editTask.status : 'todo',
   );
+  const [priority, setPriority] = useState<TaskPriority>(
+    editTask ? editTask.priority : 'medium',
+  );
 
   function getEditTask() {
     if (currentlyEditing === 'create') return null;
@@ -37,6 +40,7 @@ function TaskForm(props: CreateTaskProps) {
       title,
       description,
       status,
+      priority,
     };
     const type = editTask ? 'edit' : 'create';
     handleSubmitTask(task, type);
@@ -87,6 +91,17 @@ function TaskForm(props: CreateTaskProps) {
               <option value={'todo'}>To Do</option>
               <option value={'in-progress'}>In Progress</option>
               <option value={'done'}>Done</option>
+            </select>
+          </div>
+          <div className="input-container">
+            <div className="input-label">Priority</div>
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value as TaskPriority)}
+            >
+              <option value={'low'}>Low</option>
+              <option value={'medium'}>Medium</option>
+              <option value={'high'}>High</option>
             </select>
           </div>
           <button onClick={resetChanges}>Cancel</button>
