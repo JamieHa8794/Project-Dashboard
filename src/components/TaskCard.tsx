@@ -8,11 +8,12 @@ type TaskCardProps = {
   handleDeleteTask: (id: string) => void;
 };
 
-function TaskCard({
-  task: { id, title, description },
-  handleSetEditTask,
-  handleDeleteTask,
-}: TaskCardProps) {
+function TaskCard(props: TaskCardProps) {
+  const {
+    task: { id, title, description },
+    handleSetEditTask,
+    handleDeleteTask,
+  } = props;
   return (
     <div>
       <div className="card-container">

@@ -11,6 +11,8 @@ type CreateTaskProps = {
 };
 
 function TaskForm(props: CreateTaskProps) {
+  const { tasks, currentlyEditing, handleSubmitTask, handleSetEditTask } =
+    props;
   const editTask = getEditTask();
 
   const [title, setTitle] = useState(editTask ? editTask.title : '');
@@ -22,10 +24,9 @@ function TaskForm(props: CreateTaskProps) {
   );
 
   function getEditTask() {
-    if (props.currentlyEditing === 'create') return null;
+    if (currentlyEditing === 'create') return null;
 
-    const editTask =
-      props.tasks.find((task) => task.id === props.currentlyEditing) || null;
+    const editTask = tasks.find((task) => task.id === currentlyEditing) || null;
 
     return editTask;
   }
@@ -38,14 +39,14 @@ function TaskForm(props: CreateTaskProps) {
       status,
     };
     const type = editTask ? 'edit' : 'create';
-    props.handleSubmitTask(task, type);
-    props.handleSetEditTask(null);
+    handleSubmitTask(task, type);
+    handleSetEditTask(null);
     setTitle('');
     setDescription('');
   }
 
   function resetChanges() {
-    props.handleSetEditTask(null);
+    handleSetEditTask(null);
     setTitle('');
     setDescription('');
   }
@@ -54,9 +55,7 @@ function TaskForm(props: CreateTaskProps) {
     <div>
       <div className="create-task-container">
         <div className="modal-header">
-          <div>
-            {props.currentlyEditing ? 'Edit a Task' : 'Create a New Task'}
-          </div>
+          <div>{currentlyEditing ? 'Edit a Task' : 'Create a New Task'}</div>
         </div>
         <div className="form-container">
           <div className="input-container">

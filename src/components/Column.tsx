@@ -12,12 +12,8 @@ type ColumnProps = {
   handleDeleteTask: (id: string) => void;
 };
 
-function Column({
-  columnName,
-  tasks,
-  handleSetEditTask,
-  handleDeleteTask,
-}: ColumnProps) {
+function Column(props: ColumnProps) {
+  const { columnName, tasks, handleSetEditTask, handleDeleteTask } = props;
   const hasNoTasks = tasks.length === 0;
 
   return (
