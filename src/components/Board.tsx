@@ -4,7 +4,11 @@ import Column from './Column';
 import TaskForm from './TaskForm';
 
 import type { Task, TaskAction } from '../types/task';
-import { tasks as InitialTasks } from '../data/tasks';
+import {
+  tasks as InitialTasks,
+  taskStatusList,
+  priorityList,
+} from '../data/tasks';
 
 import '../styles/Board.css';
 
@@ -19,6 +23,7 @@ function Board() {
   const [currentlyEditing, setCurrentlyEditing] = useState<string | null>(null);
   const [serachText, setSearchText] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('');
+  const [selectedStatus, setSelctedStatus] = useState('');
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -50,15 +55,22 @@ function Board() {
   }
 
   function getFilteredTasks() {
-    const filteredTitle = tasks.filter((task) => {
+    let filteredTaskList = tasks.filter((task) => {
       return task.title.toLowerCase().includes(serachText.toLowerCase());
     });
 
     if (selectedPriority) {
-      return filteredTitle.filter((task) => task.priority === selectedPriority);
-    } else {
-      return filteredTitle;
+      filteredTaskList = filteredTaskList.filter(
+        (task) => task.priority === selectedPriority,
+      );
     }
+    if (selectedStatus) {
+      filteredTaskList = filteredTaskList.filter(
+        (task) => task.status === selectedStatus,
+      );
+    }
+
+    return filteredTaskList;
   }
   const filteredTasks = getFilteredTasks();
 
@@ -73,20 +85,43 @@ function Board() {
       />
       <div className="board-container">
         <div className="board-toolbar">
-          <input
-            placeholder="Search"
-            value={serachText}
-            onChange={(e) => setSearchText(e.target.value)}
-          ></input>
-          <select
-            value={selectedPriority}
-            onChange={(e) => setSelectedPriority(e.target.value)}
-          >
-            <option value={''}>Filter by Priority</option>
-            <option value={'low'}>Low</option>
-            <option value={'medium'}>Medium</option>
-            <option value={'high'}>High</option>
-          </select>
+          <div className="board-toolbar-item">
+            <input
+              placeholder="Search"
+              value={serachText}
+              onChange={(e) => setSearchText(e.target.value)}
+            ></input>
+          </div>
+          <div className="board-toolbar-item">
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelctedStatus(e.target.value)}
+            >
+              <option value={''}>Filter by Status</option>
+              {taskStatusList.map((status, idx) => {
+                return (
+                  <option value={status.key} key={idx}>
+                    {status.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="board-toolbar-item">
+            <select
+              value={selectedPriority}
+              onChange={(e) => setSelectedPriority(e.target.value)}
+            >
+              <option value={''}>Filter by Priority</option>
+              {priorityList.map((priorityItem, idx) => {
+                return (
+                  <option value={priorityItem.key} key={idx}>
+                    {priorityItem.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
         </div>
         <div className="column-container">
           {columns.map((column) => {

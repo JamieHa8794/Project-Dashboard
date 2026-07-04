@@ -34,3 +34,33 @@ export const tasks: Task[] = [
     dueDate: null,
   },
 ];
+
+export const taskStatusList = [
+  {
+    key: 'todo',
+    name: 'To Do',
+  },
+  {
+    key: 'in-progress',
+    name: 'In Progress',
+  },
+  {
+    key: 'done',
+    name: 'Done',
+  },
+];
+
+export const priorityList = [
+  {
+    key: 'low',
+    name: 'Low',
+  },
+  {
+    key: 'medium',
+    name: 'Medium',
+  },
+  {
+    key: 'high',
+    name: 'High',
+  },
+];
