@@ -1,10 +1,5 @@
 import type { SelectOption } from '../types/common';
-import type {
-  Task,
-  TaskStatus,
-  TaskPriority,
-  sortOptions,
-} from '../types/task';
+import type { Task, TaskStatus, TaskPriority } from '../types/task';
 
 export const tasks: Task[] = [
   {
@@ -68,24 +63,5 @@ export const priorityList: SelectOption<TaskPriority>[] = [
   {
     key: 'high',
     name: 'High',
-  },
-];
-
-export const sortList: SelectOption<sortOptions>[] = [
-  {
-    key: 'default',
-    name: 'Default',
-  },
-  {
-    key: 'due-date',
-    name: 'Due Date',
-  },
-  {
-    key: 'priority',
-    name: 'Priority',
-  },
-  {
-    key: 'title',
-    name: 'Title',
   },
 ];

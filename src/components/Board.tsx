@@ -9,18 +9,13 @@ import {
   tasks as InitialTasks,
   taskStatusList,
   priorityList,
-  sortList,
 } from '../data/tasks';
+
+import { columns, sortList } from '../data/board';
 
 import '../styles/Board.css';
 
 function Board() {
-  const columns = [
-    { id: 1, title: 'To Do', status: 'todo' },
-    { id: 2, title: 'In Progress', status: 'in-progress' },
-    { id: 3, title: 'Done', status: 'done' },
-  ];
-
   const [tasks, dispatch] = useReducer(taskReducer, undefined, getInitialTasks);
   const [currentlyEditing, setCurrentlyEditing] = useState<string | null>(null);
   const [serachText, setSearchText] = useState('');
