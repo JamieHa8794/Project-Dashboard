@@ -7,14 +7,14 @@ import '../styles/TaskCard.css';
 type TaskCardProps = {
   task: Task;
   handleSetEditTask: (id: string | null) => void;
-  handleDeleteTask: (id: string) => void;
+  handleSetDeleteTaskId: (id: string) => void;
 };
 
 function TaskCard(props: TaskCardProps) {
   const {
     task: { id, title, description, priority, dueDate, tags },
     handleSetEditTask,
-    handleDeleteTask,
+    handleSetDeleteTaskId,
   } = props;
 
   const formattedDueDate = formatDateString(dueDate);
@@ -28,7 +28,7 @@ function TaskCard(props: TaskCardProps) {
           <button
             onClick={() => {
               handleSetEditTask(null);
-              handleDeleteTask(id);
+              handleSetDeleteTaskId(id);
             }}
           >
             X

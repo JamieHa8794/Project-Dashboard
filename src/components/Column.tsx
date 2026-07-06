@@ -9,11 +9,11 @@ type ColumnProps = {
   tasks: Task[];
 
   handleSetEditTask: (id: string | null) => void;
-  handleDeleteTask: (id: string) => void;
+  handleSetDeleteTaskId: (id: string) => void;
 };
 
 function Column(props: ColumnProps) {
-  const { columnName, tasks, handleSetEditTask, handleDeleteTask } = props;
+  const { columnName, tasks, handleSetEditTask, handleSetDeleteTaskId } = props;
   const hasNoTasks = tasks.length === 0;
 
   return (
@@ -32,7 +32,7 @@ function Column(props: ColumnProps) {
                   key={task.id}
                   task={task}
                   handleSetEditTask={handleSetEditTask}
-                  handleDeleteTask={handleDeleteTask}
+                  handleSetDeleteTaskId={handleSetDeleteTaskId}
                 />
               );
             })

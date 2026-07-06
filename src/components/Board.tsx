@@ -14,10 +14,12 @@ import {
 import { columns, sortList } from '../data/board';
 
 import '../styles/Board.css';
+import DeleteModal from './DeleteModal';
 
 function Board() {
   const [tasks, dispatch] = useReducer(taskReducer, undefined, getInitialTasks);
   const [currentlyEditing, setCurrentlyEditing] = useState<string | null>(null);
+  const [deleteTaskId, setDeleteTaskId] = useState<string | null>(null);
   const [serachText, setSearchText] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('');
   const [selectedStatus, setSelctedStatus] = useState('');
@@ -49,11 +51,20 @@ function Board() {
     setCurrentlyEditing(id);
   }
 
+  function handleSetDeleteTaskId(id: string | null) {
+    setDeleteTaskId(id);
+  }
+  function handleConfirmDelete(id: string | null) {
+    if (id === null) {
+      setDeleteTaskId(null);
+      return;
+    }
+
+    handleDeleteTask(id);
+    setDeleteTaskId(null);
+  }
+
   function handleDeleteTask(id: string) {
-    const confirmed = window.confirm('Delete? This action cannot be undone');
-
-    if (!confirmed) return;
-
     dispatch({ type: 'DELETE_TASK', payload: id });
   }
 
@@ -114,6 +125,15 @@ function Board() {
         currentlyEditing={currentlyEditing}
         handleSetEditTask={handleSetEditTask}
       />
+      {deleteTaskId ? (
+        <DeleteModal
+          tasks={tasks}
+          deleteTaskId={deleteTaskId}
+          handleConfirmDelete={handleConfirmDelete}
+        />
+      ) : (
+        ''
+      )}
       <div className="board-container">
         <div className="board-toolbar">
           <div className="board-toolbar-item">
@@ -182,7 +202,7 @@ function Board() {
                 columnName={column.title}
                 tasks={columnTasks}
                 handleSetEditTask={handleSetEditTask}
-                handleDeleteTask={handleDeleteTask}
+                handleSetDeleteTaskId={handleSetDeleteTaskId}
               />
             );
           })}
