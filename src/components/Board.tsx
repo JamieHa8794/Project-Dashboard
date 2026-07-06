@@ -28,7 +28,7 @@ function Board() {
   }, [tasks]);
 
   function handleSubmitTask(task: Task, type: string) {
-    const { id, title, description, status, priority, dueDate } = task;
+    const { id, title, description, status, priority, dueDate, tags } = task;
     const newTask: Task = {
       id,
       title,
@@ -36,6 +36,7 @@ function Board() {
       status,
       priority,
       dueDate,
+      tags,
     };
     if (type === 'create') {
       dispatch({ type: 'ADD_TASK', payload: newTask });

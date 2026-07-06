@@ -12,7 +12,7 @@ type TaskCardProps = {
 
 function TaskCard(props: TaskCardProps) {
   const {
-    task: { id, title, description, priority, dueDate },
+    task: { id, title, description, priority, dueDate, tags },
     handleSetEditTask,
     handleDeleteTask,
   } = props;
@@ -38,6 +38,11 @@ function TaskCard(props: TaskCardProps) {
           <div>{description}</div>
           <div>{formattedPriority}</div>
           <div>{formattedDueDate}</div>
+          <div className="tag-container">
+            {tags.map((tag, idx) => {
+              return <li key={idx}>#{tag}</li>;
+            })}
+          </div>
         </div>
         <div className="card-footer">
           <button

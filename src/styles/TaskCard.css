@@ -8,3 +8,10 @@
   display: flex;
   justify-content: space-between;
 }
+.tag-container {
+  display: flex;
+}
+.tag-container li {
+  list-style-type: none;
+  padding: 0 5px;
+}

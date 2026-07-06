@@ -35,7 +35,8 @@ function TaskForm(props: CreateTaskProps) {
         description: editTask.description,
         status: editTask.status,
         priority: editTask.priority,
-        dueDate: editTask.dueDate ?? '',
+        dueDate: editTask.dueDate,
+        tags: editTask.tags,
       }
     : {
         title: '',
@@ -43,11 +44,16 @@ function TaskForm(props: CreateTaskProps) {
         status: 'todo',
         priority: 'medium',
         dueDate: '',
+        tags: [],
       };
 
   const [formState, setFormState] = useState<TaskFormState>(initialFormState);
 
   function onSubmitTask() {
+    const formattedTags = formState.tags
+      .filter((x) => x.trim() !== '')
+      .map((x) => x.trim());
+
     const task: Task = {
       id: editTask?.id || crypto.randomUUID(),
       title: formState.title.trim(),
@@ -55,6 +61,7 @@ function TaskForm(props: CreateTaskProps) {
       status: formState.status,
       priority: formState.priority,
       dueDate: formState.dueDate,
+      tags: formattedTags,
     };
     const type = editTask ? 'edit' : 'create';
     handleSubmitTask(task, type);
@@ -69,6 +76,7 @@ function TaskForm(props: CreateTaskProps) {
       status: 'todo',
       priority: 'medium',
       dueDate: '',
+      tags: [],
     });
   }
 
@@ -132,12 +140,24 @@ function TaskForm(props: CreateTaskProps) {
             </select>
           </div>
           <div className="input-container">
-            <div className="input-label">Priority</div>
+            <div className="input-label">Due Date</div>
             <input
               type="date"
               value={formState.dueDate ?? ''}
               onChange={(e) => {
                 setFormState({ ...formState, dueDate: e.target.value });
+              }}
+            ></input>
+          </div>
+          <div className="input-container">
+            <div className="input-label">
+              Tags: Insert as a comma seperated list
+            </div>
+            <input
+              value={formState.tags}
+              onChange={(e) => {
+                const inputArr = e.target.value.split(',');
+                setFormState({ ...formState, tags: inputArr });
               }}
             ></input>
           </div>

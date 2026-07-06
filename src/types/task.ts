@@ -8,13 +8,9 @@ export type Task = {
   description: string;
   status: TaskStatus;
   priority: TaskPriority;
-  dueDate: string | null;
+  dueDate: string;
+  tags: string[];
 };
-
-export type TaskAction =
-  | { type: 'ADD_TASK'; payload: Task }
-  | { type: 'UPDATE_TASK'; payload: Task }
-  | { type: 'DELETE_TASK'; payload: string | null };
 
 export type TaskFormState = {
   title: string;
@@ -22,7 +18,13 @@ export type TaskFormState = {
   status: TaskStatus;
   priority: TaskPriority;
   dueDate: string;
+  tags: string[];
 };
+
+export type TaskAction =
+  | { type: 'ADD_TASK'; payload: Task }
+  | { type: 'UPDATE_TASK'; payload: Task }
+  | { type: 'DELETE_TASK'; payload: string | null };
 
 export const PRIORITY_ORDER: Record<TaskPriority, number> = {
   high: 0,
