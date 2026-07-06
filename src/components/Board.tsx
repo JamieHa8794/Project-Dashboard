@@ -73,6 +73,13 @@ function Board() {
   }
   const filteredTasks = getFilteredTasks();
 
+  function resetView() {
+    setSearchText('');
+    setSelectedPriority('');
+    setSelctedStatus('');
+    setSortBy('default');
+  }
+
   function sortTasks() {
     if (sortBy === 'default') {
       return filteredTasks;
@@ -155,6 +162,9 @@ function Board() {
                 );
               })}
             </select>
+          </div>
+          <div className="board-toolbar-item">
+            <button onClick={resetView}>Reset View</button>
           </div>
         </div>
         <div className="column-container">
