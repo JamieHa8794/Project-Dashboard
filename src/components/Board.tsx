@@ -50,6 +50,10 @@ function Board() {
   }
 
   function handleDeleteTask(id: string) {
+    const confirmed = window.confirm('Delete? This action cannot be undone');
+
+    if (!confirmed) return;
+
     dispatch({ type: 'DELETE_TASK', payload: id });
   }
 
