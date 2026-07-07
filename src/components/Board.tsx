@@ -3,7 +3,7 @@ import { useEffect, useReducer, useState } from 'react';
 import Column from './Column';
 import TaskFormModal from './TaskFormModal';
 
-import type { Task, TaskAction, sortOptions } from '../types/task';
+import type { Task, TaskAction, TaskStatus, sortOptions } from '../types/task';
 import { PRIORITY_ORDER } from '../types/task';
 import {
   tasks as InitialTasks,
@@ -25,6 +25,7 @@ function Board() {
   const [selectedStatus, setSelctedStatus] = useState('');
   const [sortBy, setSortBy] = useState<sortOptions>('default');
   const [isTaskFormModalOpen, setIsTaskFormModalOpen] = useState(false);
+  const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -121,6 +122,23 @@ function Board() {
     setIsTaskFormModalOpen(!isTaskFormModalOpen);
   }
 
+  function handleDragStart(id: string) {
+    setDraggedTaskId(id);
+  }
+
+  function handleDropTask(newTaskStatus: TaskStatus) {
+    if (!draggedTaskId) return;
+
+    dispatch({
+      type: 'MOVE_TASK',
+      payload: {
+        taskId: draggedTaskId,
+        status: newTaskStatus,
+      },
+    });
+    setDraggedTaskId(null);
+  }
+
   return (
     <div>
       {isTaskFormModalOpen ? (
@@ -206,7 +224,7 @@ function Board() {
           </div>
         </div>
 
-        <div className="column-container">
+        <div className="board-body">
           {columns.map((column) => {
             const columnTasks = formattedTaskList.filter(
               (task) => task.status === column.status,
@@ -215,10 +233,13 @@ function Board() {
               <Column
                 key={column.id}
                 columnName={column.title}
+                columnStatus={column.status}
                 tasks={columnTasks}
                 handleSetEditTask={handleSetEditTask}
                 handleSetDeleteTaskId={handleSetDeleteTaskId}
                 handleToggleTaskFormModal={handleToggleTaskFormModal}
+                handleDragStart={handleDragStart}
+                handleDropTask={handleDropTask}
               />
             );
           })}
@@ -249,6 +270,13 @@ function taskReducer(tasks: Task[], action: TaskAction) {
       });
     case 'DELETE_TASK':
       return tasks.filter((task) => task.id !== action.payload);
+    case 'MOVE_TASK':
+      return tasks.map((task) => {
+        if (task.id === action.payload.taskId) {
+          return { ...task, status: action.payload.status };
+        }
+        return task;
+      });
 
     default:
       return tasks;

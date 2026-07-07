@@ -1,3 +1,7 @@
+.column-container {
+  display: flex;
+  flex-direction: column;
+}
 .column-header {
   display: flex;
   justify-content: center;

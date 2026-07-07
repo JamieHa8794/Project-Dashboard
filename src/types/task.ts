@@ -24,7 +24,8 @@ export type TaskFormState = {
 export type TaskAction =
   | { type: 'ADD_TASK'; payload: Task }
   | { type: 'UPDATE_TASK'; payload: Task }
-  | { type: 'DELETE_TASK'; payload: string | null };
+  | { type: 'DELETE_TASK'; payload: string | null }
+  | { type: 'MOVE_TASK'; payload: { taskId: string; status: TaskStatus } };
 
 export const PRIORITY_ORDER: Record<TaskPriority, number> = {
   high: 0,
