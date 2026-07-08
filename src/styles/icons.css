@@ -1,0 +1,11 @@
+.icon.sm {
+  width: 20px;
+  height: 20px;
+}
+
+.icon.primary {
+  color: var(--color-primary-700);
+}
+.icon.placeholder {
+  color: var(--gray-400);
+}

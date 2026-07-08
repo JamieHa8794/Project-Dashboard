@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from 'react';
 
 import Column from './Column';
 import TaskFormModal from './TaskFormModal';
-import BoardToolbar from './BoardToolBar';
+import BoardToolbar from './Toolbar';
 
 import type { Task, TaskAction, TaskStatus, sortOptions } from '../types/task';
 import { PRIORITY_ORDER } from '../types/task';
@@ -20,7 +20,7 @@ function Board() {
   const [serachText, setSearchText] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [sortBy, setSortBy] = useState<sortOptions>('default');
+  const [sortBy, setSortBy] = useState<sortOptions>('newest');
   const [isTaskFormModalOpen, setIsTaskFormModalOpen] = useState(false);
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
   const [hoveredColumn, setHoveredColumn] = useState<string | null>(null);
@@ -72,19 +72,31 @@ function Board() {
     setSearchText(newSearchText);
   }
   function handleSetSelectedStatus(newStatus: string) {
-    setSelectedStatus(newStatus);
+    if (newStatus === selectedStatus) {
+      setSelectedStatus('');
+    } else {
+      setSelectedStatus(newStatus);
+    }
   }
   function handleSetSelectedPriority(newPriority: string) {
-    setSelectedPriority(newPriority);
+    if (newPriority === selectedPriority) {
+      setSelectedPriority('');
+    } else {
+      setSelectedPriority(newPriority);
+    }
   }
   function handleSetSortBy(newSortBy: sortOptions) {
-    setSortBy(newSortBy);
+    if (newSortBy === selectedStatus) {
+      setSortBy('newest');
+    } else {
+      setSortBy(newSortBy);
+    }
   }
   function resetView() {
     setSearchText('');
     setSelectedPriority('');
     setSelectedStatus('');
-    setSortBy('default');
+    setSortBy('newest');
   }
 
   const filteredTasks = tasks.filter((task) => {
@@ -104,7 +116,7 @@ function Board() {
   });
 
   const sortedTaskList = [...filteredTasks].sort((a, b) => {
-    if (sortBy === 'default') {
+    if (sortBy === 'newest') {
       return 0;
     } else if (sortBy === 'due-date') {
       return (a.dueDate || '').localeCompare(b.dueDate || '');

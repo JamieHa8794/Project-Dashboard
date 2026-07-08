@@ -11,8 +11,8 @@ export const columns: Column[] = [
 
 export const sortList: SelectOption<sortOptions>[] = [
   {
-    key: 'default',
-    name: 'Default',
+    key: 'newest',
+    name: 'Newest',
   },
   {
     key: 'due-date',

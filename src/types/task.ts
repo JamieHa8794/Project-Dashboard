@@ -1,6 +1,6 @@
 export type TaskStatus = 'todo' | 'in-progress' | 'done';
 export type TaskPriority = 'low' | 'medium' | 'high';
-export type sortOptions = 'default' | 'due-date' | 'priority' | 'title';
+export type sortOptions = 'newest' | 'due-date' | 'priority' | 'title';
 
 export type Task = {
   id: string;

@@ -1,0 +1,25 @@
+.input-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+
+  padding: 5px;
+  height: 40px;
+
+  background: var(--background-surface);
+  color: var(--text-primary);
+
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+}
+.input-container .inpt {
+  all: unset;
+}
+
+input.inpt::placeholder {
+  color: var(--text-muted);
+}

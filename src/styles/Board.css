@@ -1,18 +1,7 @@
 .board-container {
   padding: 2rem;
 }
-.board-toolbar {
-  margin: 10px 0;
-  display: flex;
-  justify-content: space-between;
-}
-.board-toolbar-start,
-.board-toolbar-end {
-  display: flex;
-}
-.board-toolbar-item {
-  padding: 0 5px;
-}
+
 .board-body {
   display: flex;
   justify-content: space-between;
