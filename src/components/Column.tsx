@@ -3,6 +3,7 @@ import TaskCard from './TaskCard';
 import type { Task, TaskStatus } from '../types/task';
 
 import '../styles/Column.css';
+import { Inbox } from 'lucide-react';
 
 type ColumnProps = {
   columnName: string;
@@ -54,11 +55,26 @@ function Column(props: ColumnProps) {
       }}
     >
       <div className="column-header">
-        <div>{columnName}</div>
+        <div className="column-header-title">{columnName}</div>
+        <div className="chip">{tasks.length}</div>
       </div>
       <div>
         {hasNoTasks ? (
-          <div className="empty-state-message">No Tasks Yet</div>
+          <div
+            className={`empty-state-message
+            ${isDragging ? 'dragging' : ''} 
+            ${isHovered ? 'hovered' : ''}`}
+          >
+            <Inbox />
+            <div className="empty-state-message-header">No tasks yet</div>
+            <div
+              className={`empty-state-message-main
+              ${isDragging ? 'dragging' : ''} 
+              ${isHovered ? 'hovered' : ''}`}
+            >
+              Drag tasks here or create a new task
+            </div>
+          </div>
         ) : (
           tasks.map((task) => {
             return (
