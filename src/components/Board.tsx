@@ -6,19 +6,24 @@ import BoardToolbar from './Toolbar';
 
 import type { Task, TaskAction, TaskStatus, sortOptions } from '../types/task';
 import { PRIORITY_ORDER } from '../types/task';
-import { tasks as InitialTasks } from '../data/tasks';
 
 import { columns, boardTitle, boardSubtitle } from '../data/board';
 
 import '../styles/Board.css';
 import DeleteModal from './DeleteModal';
+import {
+  createTask,
+  deleteTask,
+  getTasks,
+  updateTask,
+} from '../services/taskService';
 // import { EllipsisVertical } from 'lucide-react';
 
 function Board() {
   const [title, setTitle] = useState(boardTitle);
   const [subtitle, setSubtitle] = useState(boardSubtitle);
 
-  const [tasks, dispatch] = useReducer(taskReducer, undefined, getInitialTasks);
+  const [tasks, dispatch] = useReducer(taskReducer, []);
   const [currentlyEditing, setCurrentlyEditing] = useState<string | null>(null);
   const [deleteTaskId, setDeleteTaskId] = useState<string | null>(null);
   const [serachText, setSearchText] = useState('');
@@ -30,10 +35,14 @@ function Board() {
   const [hoveredColumn, setHoveredColumn] = useState<string | null>(null);
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+    async function loadTasks() {
+      const tasks = await getTasks();
+      dispatch({ type: 'LOAD_TASKS', payload: tasks });
+    }
+    void loadTasks();
+  }, []);
 
-  function handleSubmitTask(task: Task, type: string) {
+  async function handleSubmitTask(task: Task, type: string) {
     const { id, title, description, status, priority, dueDate, tags } = task;
     const newTask: Task = {
       id,
@@ -45,8 +54,10 @@ function Board() {
       tags,
     };
     if (type === 'create') {
+      await createTask(newTask);
       dispatch({ type: 'ADD_TASK', payload: newTask });
     } else if (type === 'edit') {
+      await updateTask(newTask.id, newTask);
       dispatch({ type: 'UPDATE_TASK', payload: newTask });
     }
   }
@@ -68,7 +79,8 @@ function Board() {
     setDeleteTaskId(null);
   }
 
-  function handleDeleteTask(id: string) {
+  async function handleDeleteTask(id: string) {
+    await deleteTask(id);
     dispatch({ type: 'DELETE_TASK', payload: id });
   }
 
@@ -152,8 +164,10 @@ function Board() {
     clearDragState();
   }
 
-  function handleDropTask(newTaskStatus: TaskStatus) {
+  async function handleDropTask(newTaskStatus: TaskStatus) {
     if (!draggedTaskId) return;
+
+    await updateTask(draggedTaskId, { status: newTaskStatus });
 
     dispatch({
       type: 'MOVE_TASK',
@@ -245,16 +259,10 @@ function Board() {
   );
 }
 
-function getInitialTasks() {
-  const savedData = localStorage.getItem('tasks');
-  if (savedData) {
-    return JSON.parse(savedData);
-  }
-  return InitialTasks;
-}
-
 function taskReducer(tasks: Task[], action: TaskAction) {
   switch (action.type) {
+    case 'LOAD_TASKS':
+      return action.payload;
     case 'ADD_TASK':
       return [...tasks, action.payload];
     case 'UPDATE_TASK':
