@@ -10,3 +10,7 @@ export type Task = {
   dueDate: string;
   tags: string[];
 };
+
+export type TaskUpdates = Partial<
+  Pick<Task, 'title' | 'description' | 'status' | 'priority' | 'dueDate'>
+>;

@@ -18,10 +18,6 @@ export type TaskAction =
   | { type: 'DELETE_TASK'; payload: string | null }
   | { type: 'MOVE_TASK'; payload: { taskId: string; status: TaskStatus } };
 
-export type TaskUpdates = Partial<
-  Pick<Task, 'title' | 'description' | 'status' | 'priority' | 'dueDate'>
->;
-
 export const PRIORITY_ORDER: Record<TaskPriority, number> = {
   high: 0,
   medium: 1,

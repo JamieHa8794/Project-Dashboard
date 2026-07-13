@@ -1,5 +1,4 @@
-import type { Task } from '../../shared/types/tasks';
-import type { TaskUpdates } from '../types/task';
+import type { Task, TaskUpdates } from '../../shared/types/tasks';
 
 const TASKS_STORAGE_KEY = 'tasks';
 const API_URL = 'http://localhost:3000';
