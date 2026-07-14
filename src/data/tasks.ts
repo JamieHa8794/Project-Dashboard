@@ -10,7 +10,7 @@ export const taskStatusList: SelectOption<TaskStatus>[] = [
     tone: 'light-primary ',
   },
   {
-    key: 'in-progress',
+    key: 'in_progress',
     name: 'In Progress',
     icon: Circle,
     tone: 'warning',

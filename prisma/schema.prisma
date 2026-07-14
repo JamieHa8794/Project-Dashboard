@@ -12,13 +12,24 @@ datasource db {
   provider = "postgresql"
 }
 
+enum TaskStatus{
+  todo
+  in_progress
+  done
+}
+
+enum TaskPriority{
+  low
+  medium
+  high
+}
 
 model Task {
   id          String   @id @default(uuid())
   title       String
   description String
-  status      String
-  priority    String
+  status      TaskStatus
+  priority    TaskPriority
   dueDate     String
   tags        String[]
 }

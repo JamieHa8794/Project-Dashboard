@@ -11,8 +11,11 @@ type TaskIdParams = {
   taskId: string;
 };
 
-export function getTasksController(_req: Request, res: Response): void {
-  const tasks = getAllTasks();
+export async function getTasksController(
+  _req: Request,
+  res: Response,
+): Promise<void> {
+  const tasks = await getAllTasks();
 
   res.json(tasks);
 }

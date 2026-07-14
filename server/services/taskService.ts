@@ -1,3 +1,4 @@
+import { prisma } from '../lib/prisma';
 import { Task, TaskUpdates } from '../../shared/types/tasks';
 
 let tasks: Task[] = [
@@ -72,7 +73,7 @@ let tasks: Task[] = [
     title: 'Implement GET /tasks',
     description:
       'Return all tasks from the backend and connect the frontend read path.',
-    status: 'in-progress',
+    status: 'in_progress',
     priority: 'high',
     dueDate: '2026-07-14',
     tags: ['api', 'backend'],
@@ -257,8 +258,8 @@ let tasks: Task[] = [
   },
 ];
 
-export function getAllTasks(): Task[] {
-  return [...tasks];
+export async function getAllTasks(): Promise<Task[]> {
+  return prisma.task.findMany();
 }
 
 export function createTask(newTask: Task): Task {
