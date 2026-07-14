@@ -6,7 +6,7 @@ import {
   deleteTaskController,
   getTasksController,
   updateTaskController,
-} from './contollers/taskController';
+} from './controllers/taskController';
 
 const app = express();
 
