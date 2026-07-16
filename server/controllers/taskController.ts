@@ -5,11 +5,7 @@ import {
   createTask,
   updateTask,
 } from '../services/taskService';
-import type {
-  Task,
-  CreateTaskInput,
-  TaskUpdates,
-} from '../../shared/types/tasks';
+import type { CreateTaskInput, TaskUpdates } from '../../shared/types/tasks';
 
 type TaskIdParams = {
   taskId: string;

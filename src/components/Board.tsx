@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from 'react';
 
 import Column from './Column';
 import TaskFormModal from './TaskFormModal';
-import BoardToolbar from './Toolbar';
+import BoardToolbar from './BoardToolbar';
 
 import type { Task, TaskStatus } from '../../shared/types/tasks';
 import type { TaskAction, sortOptions } from '../types/task';
